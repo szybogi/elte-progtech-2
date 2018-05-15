@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Clob;
+import java.util.List;
 
 /**
  * Describes a House
@@ -21,12 +23,19 @@ import java.io.Serializable;
 })
 public class House extends AbstractEntity implements Serializable {
 
-	private static final long serialVersionUID = 100000001L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Integer id;
+	private static final long serialVersionUID = -8049832814482377930L;
 
 	private String name;
+
+	@Lob
+	private Clob crest;
+
+	private String motto;
+
+	@ManyToMany(mappedBy = "houses")
+	private List<Alliance> alliances;
+
+	@OneToMany
+	private List<Character> characters;
 
 }

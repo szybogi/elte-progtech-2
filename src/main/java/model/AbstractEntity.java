@@ -17,12 +17,10 @@ import java.io.Serializable;
  * @see java.io.Serializable
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
-	private static final long serialVersionUID = 100000000L;
+	private static final long serialVersionUID = -4386653953478566832L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

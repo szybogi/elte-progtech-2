@@ -20,7 +20,7 @@ public class Menu extends AbstractPanel {
 		house.setName("lol");
 		houseController.autoPersist(house);
 
-		Stream<House> houses = houseController.find("findAll");
+		Stream<House> houses = houseController.createNamedQuery("findAll").getResultStream();
 
 		System.out.println(houses.collect(Collectors.toList()));
 

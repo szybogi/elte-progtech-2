@@ -1,17 +1,18 @@
 package control;
 
-import logic.Findable;
 import model.AbstractEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import java.util.Map;
 
 /**
  * Backbone for Facades, the managing classes of the entities
  * @param <E> type of the facade, has to be an AbstractEntity
  */
-public class AbstractController<E extends AbstractEntity> implements AutoCloseable, Findable<E> {
+public class AbstractController<E extends AbstractEntity> implements AutoCloseable {
 
 	private static final EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("thrones");
 
@@ -25,6 +26,7 @@ public class AbstractController<E extends AbstractEntity> implements AutoCloseab
 
 	/**
 	 * Persists the entity in a new Transaction
+	 *
 	 * @param entity to be persisted
 	 */
 	public void persist(E entity) {
@@ -35,6 +37,7 @@ public class AbstractController<E extends AbstractEntity> implements AutoCloseab
 
 	/**
 	 * Merges the data in the entity in the persistence
+	 *
 	 * @param entity to be merged
 	 */
 	public void merge(E entity) {
@@ -47,17 +50,20 @@ public class AbstractController<E extends AbstractEntity> implements AutoCloseab
 	 * Decides whether the entity needs to be merged or persisted
 	 * since every Id is auto generated we can rely on the "Nullness"
 	 * of the Id to see if the entity is in the Persistence or not
+	 *
 	 * @param entity to be persisted or merged
 	 */
 	public void autoPersist(E entity) {
-		if(entity.getId() == null) {
+		if (entity.getId() == null) {
 			persist(entity);
 		} else {
 			merge(entity);
 		}
 	}
+
 	/**
 	 * Removes the entity from persistence
+	 *
 	 * @param entity to be removed
 	 */
 	public void remove(E entity) {
@@ -65,9 +71,10 @@ public class AbstractController<E extends AbstractEntity> implements AutoCloseab
 		entityManager.remove(entity);
 		commit();
 	}
+
 	/**
 	 * Begins the transaction
-	 *
+	 * <p>
 	 * Since this is Java SE environment which is not handled by JTA
 	 * we have to manually start and commit every transaction
 	 */
@@ -88,13 +95,8 @@ public class AbstractController<E extends AbstractEntity> implements AutoCloseab
 		emFactory.close();
 	}
 
-	@Override
-	public Class<E> getType() {
-		return c;
+	public TypedQuery<E> createNamedQuery(String name) {
+		return entityManager.createNamedQuery(c.getSimpleName() + "." + name, c);
 	}
 
-	@Override
-	public EntityManager entityManager() {
-		return entityManager;
-	}
 }
