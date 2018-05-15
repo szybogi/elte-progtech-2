@@ -1,24 +1,32 @@
 package panel;
 
-import control.HouseController;
+import model.Alliance;
 import model.House;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Menu extends AbstractPanel {
 
-	private HouseController houseController = new HouseController();
 
 	public Menu() {
 		System.out.println("menu loaded");
 
 		setSize(1200, 720);
 
-		House house = new House();
-		house.setName("lol");
-		houseController.autoPersist(house);
+		House houseBaratheon = House.builder().name("baratheon").build();
+		House houseStark = House.builder().name("stark").build();
+
+		Alliance alliance = Alliance.builder()
+				.houses(Arrays.asList(houseBaratheon, houseStark))
+				.build();
+		//houseController.autoPersist(houseBaratheon);
+		//houseController.autoPersist(houseStark);
+		allianceController.autoPersist(alliance);
+
+
 
 		Stream<House> houses = houseController.createNamedQuery("findAll").getResultStream();
 

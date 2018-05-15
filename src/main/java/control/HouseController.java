@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class HouseController extends AbstractController<House> {
 
-	public HouseController() {
+	HouseController() {
 		super(House.class);
 	}
 
@@ -18,6 +18,5 @@ public class HouseController extends AbstractController<House> {
 		createNamedQuery("asd");
 		System.out.println("ALLLIVE");
 	}
-
 
 }

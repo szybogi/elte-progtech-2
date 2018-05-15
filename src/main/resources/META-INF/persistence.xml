@@ -5,7 +5,7 @@
     <persistence-unit name="thrones" transaction-type="RESOURCE_LOCAL">
         <class>model.House</class>
         <class>model.Character</class>
-        <class>model.CharacterStatus</class>
+        <class>model.Status</class>
         <class>model.Alliance</class>
         <properties>
             <!-- Database driver for the Derby Database. The driver is loaded through a Gradle dependency -->

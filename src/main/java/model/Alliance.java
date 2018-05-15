@@ -1,7 +1,6 @@
 package model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +9,9 @@ import java.util.List;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @NamedQueries({
 		@NamedQuery(name = "Character.findAll", query = "select character from Character character"),
@@ -20,11 +22,11 @@ public class Alliance extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1497535008803109978L;
 
 	@Temporal(TemporalType.DATE)
-	private Date from;
+	private Date dateFrom;
 
 	@Temporal(TemporalType.DATE)
-	private Date to;
+	private Date dateTo;
 
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<House> houses;
 }

@@ -7,7 +7,9 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @NamedQueries({
 		@NamedQuery(name = "Character.findAll", query = "select character from Character character"),
@@ -23,7 +25,9 @@ public class Character extends AbstractEntity implements Serializable {
 
 	@ManyToOne
 	@NonNull
-	private CharacterStatus status;
+	private Status status;
 
-	@ManyToOne private House house;
+	@ManyToOne
+	private House house;
+
 }

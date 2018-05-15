@@ -16,6 +16,9 @@ import java.util.List;
  */
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @NamedQueries({
 		@NamedQuery(name = "House.findAll", query = "select house from House house"),
@@ -35,7 +38,7 @@ public class House extends AbstractEntity implements Serializable {
 	@ManyToMany(mappedBy = "houses")
 	private List<Alliance> alliances;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Character> characters;
 
 }
