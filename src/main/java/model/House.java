@@ -1,0 +1,29 @@
+package model;
+
+import lombok.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import java.io.Serializable;
+
+/**
+ * Describes a House
+ *
+ * @see NamedQueries
+ * @see NamedQuery
+ * @see AbstractEntity
+ */
+@Entity
+@Data
+@EqualsAndHashCode (callSuper = true)
+@NamedQueries({
+		@NamedQuery(name = "House.findAll", query = "select house from House house"),
+		@NamedQuery(name = "House.findById", query = "select house from House house where house.id = :id")
+})
+public class House extends AbstractEntity implements Serializable {
+
+	private static final long serialVersionUID = 100000001L;
+
+}

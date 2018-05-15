@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="thrones" transaction-type="RESOURCE_LOCAL">
+        <properties>
+            <!-- Database driver for the Derby Database. The driver is loaded through a Gradle dependency -->
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+            <!-- Location of the database, right now it's always right where you start the program  -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:./db;create=true"/>
+            <!-- Username for the database -->
+            <property name="javax.persistence.jdbc.user" value=""/>
+            <!-- Password for the database -->
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <!-- EclipseLink is an Implementation of the Java Persistence Application programming Interfaces (JPA for short)
+                 this property tells it to create the tables based on the Entities in the program -->
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <!-- EclipseLink creates only the database file. Valid values are:
+                 database: creates the database file
+                 sql-script: creates a DDL in a file set in eclipselink.create-ddl-jdbc-file-name
+                 both: creates both
+             -->
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+            <!-- If eclipselink.ddl-generation.output-mode is set to "sql-script" or "both"
+                 the ddl of the database will generated in a file named this to the
+                 applications location -->
+            <property name="eclipselink.create-ddl-jdbc-file-name" value="database.sql"/>
+        </properties>
+    </persistence-unit>
+</persistence>
