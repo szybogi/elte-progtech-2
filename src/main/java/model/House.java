@@ -22,12 +22,14 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NamedQueries({
 		@NamedQuery(name = "House.findAll", query = "select house from House house"),
-		@NamedQuery(name = "House.findById", query = "select house from House house where house.id = :id")
+		@NamedQuery(name = "House.findById", query = "select house from House house where house.id = :id"),
+		@NamedQuery(name = "House.findByName", query = "select house from House house where house.name = :name")
 })
 public class House extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = -8049832814482377930L;
 
+	@Column(unique = true)
 	private String name;
 
 	@Lob

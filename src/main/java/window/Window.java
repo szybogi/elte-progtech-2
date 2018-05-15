@@ -26,23 +26,23 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setSize(1280, 720);
 		setTitle("Game of Thrones");
-		setVisible(true);
 
 		loadMenu();
+		setVisible(true);
 	}
 
 	private void loadMenu() {
 		changeContent(new Menu());
 	}
 
-	private void changeContent(AbstractPanel panel) {
+	public void changeContent(AbstractPanel panel) {
 		if(content != null) {
 			content.setVisible(false);
 			remove(content);
 		}
 		content = panel;
-		add(content);
 		content.setVisible(true);
+		add(content);
 	}
 
 	/**

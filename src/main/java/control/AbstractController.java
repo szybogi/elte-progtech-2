@@ -12,7 +12,7 @@ import java.util.Map;
  * Backbone for Facades, the managing classes of the entities
  * @param <E> type of the facade, has to be an AbstractEntity
  */
-public class AbstractController<E extends AbstractEntity> implements AutoCloseable {
+public abstract class AbstractController<E extends AbstractEntity> implements AutoCloseable {
 
 	private static final EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("thrones");
 
@@ -90,7 +90,7 @@ public class AbstractController<E extends AbstractEntity> implements AutoCloseab
 	}
 
 	@Override
-	public void close() throws Exception {
+	public void close() {
 		entityManager.close();
 		emFactory.close();
 	}

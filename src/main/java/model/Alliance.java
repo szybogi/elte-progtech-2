@@ -14,8 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @NamedQueries({
-		@NamedQuery(name = "Character.findAll", query = "select character from Character character"),
-		@NamedQuery(name = "Character.findById", query = "select character from Character character where character.id = :id")
+		@NamedQuery(name = "Alliance.findAll", query = "select alliance from Alliance alliance"),
+		@NamedQuery(name = "Alliance.findAllByFilter", query = "select alliance from Alliance alliance " +
+				"where (:active = false or alliance.dateFrom <= :date and alliance.dateTo >= :date) " +
+				"and (:contains = false or alliance.houses in (:houses))"),
+		@NamedQuery(name = "Alliance.findById", query = "select alliance from Alliance alliance where alliance.id = :id")
 })
 public class Alliance extends AbstractEntity implements Serializable {
 
@@ -29,4 +32,5 @@ public class Alliance extends AbstractEntity implements Serializable {
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<House> houses;
+
 }
