@@ -1,11 +1,13 @@
 package model;
 
+import logic.Rowable;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Clob;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Describes a House
@@ -25,7 +27,7 @@ import java.util.List;
 		@NamedQuery(name = "House.findById", query = "select house from House house where house.id = :id"),
 		@NamedQuery(name = "House.findByName", query = "select house from House house where house.name = :name")
 })
-public class House extends AbstractEntity implements Serializable {
+public class House extends AbstractEntity implements Rowable, Serializable {
 
 	private static final long serialVersionUID = -8049832814482377930L;
 
@@ -42,5 +44,20 @@ public class House extends AbstractEntity implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Character> characters;
+
+	@Override
+	public Vector<Object> convert() {
+		Vector<Object> data = new Vector<>();
+		data.add(name);
+		data.add(motto);
+		return data;
+	}
+
+	public static Vector<Object> columns = new Vector<>();
+
+	static {
+		columns.add("name");
+		columns.add("motto");
+	}
 
 }

@@ -9,7 +9,6 @@ import java.io.Serializable;
  * Abstract Entity
  * Holds a single id field which is common in every entity
  *
- *
  * @see Data
  * @see NoArgsConstructor
  * @see AllArgsConstructor

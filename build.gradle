@@ -13,7 +13,8 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
     compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
-    //compile group: 'javax.ejb', name: 'javax.ejb-api', version: '3.2.2'
     compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.1'
+    compile group: 'org.icroco', name: 'beantablemodel', version: '1.0.2'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
     compileOnly 'org.projectlombok:lombok:1.16.20'
 }

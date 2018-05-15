@@ -1,11 +1,13 @@
 package model;
 
+import logic.Rowable;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 @Entity
 @Data
@@ -20,7 +22,7 @@ import java.util.List;
 				"and (:contains = false or alliance.houses in (:houses))"),
 		@NamedQuery(name = "Alliance.findById", query = "select alliance from Alliance alliance where alliance.id = :id")
 })
-public class Alliance extends AbstractEntity implements Serializable {
+public class Alliance extends AbstractEntity implements Rowable, Serializable {
 
 	private static final long serialVersionUID = 1497535008803109978L;
 
@@ -33,4 +35,8 @@ public class Alliance extends AbstractEntity implements Serializable {
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<House> houses;
 
+	@Override
+	public Vector convert() {
+		return null;
+	}
 }

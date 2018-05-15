@@ -2,7 +2,7 @@ package control;
 
 import model.Status;
 
-public class StatusController extends AbstractController<Status>  {
+public class StatusController extends AbstractController<Status> {
 
 	private Status statusDead;
 	private Status statusAlive;
@@ -15,14 +15,14 @@ public class StatusController extends AbstractController<Status>  {
 	}
 
 	public Status getCharacterStatusDead() {
-		if(statusDead == null) {
+		if (statusDead == null) {
 			statusDead = findByName(CHARACTER_STATUS_DEAD);
 		}
 		return statusDead;
 	}
 
 	public Status getCharacterStatusAlive() {
-		if(statusAlive == null) {
+		if (statusAlive == null) {
 			statusAlive = findByName(CHARACTER_STATUS_ALIVE);
 		}
 		return statusAlive;

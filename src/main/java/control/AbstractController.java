@@ -6,10 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import java.util.Map;
+import java.util.Vector;
+import java.util.stream.Stream;
 
 /**
- * Backbone for Facades, the managing classes of the entities
+ * Backbone for Controllers, the managing classes of the entities
+ *
  * @param <E> type of the facade, has to be an AbstractEntity
  */
 public abstract class AbstractController<E extends AbstractEntity> implements AutoCloseable {
@@ -97,6 +99,10 @@ public abstract class AbstractController<E extends AbstractEntity> implements Au
 
 	public TypedQuery<E> createNamedQuery(String name) {
 		return entityManager.createNamedQuery(c.getSimpleName() + "." + name, c);
+	}
+
+	public Stream<E> findAll() {
+		return createNamedQuery("findAll").getResultStream();
 	}
 
 }
