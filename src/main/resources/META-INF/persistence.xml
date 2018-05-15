@@ -3,6 +3,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="thrones" transaction-type="RESOURCE_LOCAL">
+        <class>model.House</class>
         <properties>
             <!-- Database driver for the Derby Database. The driver is loaded through a Gradle dependency -->
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>

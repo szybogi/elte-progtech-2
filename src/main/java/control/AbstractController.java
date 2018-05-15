@@ -1,5 +1,6 @@
-package logic;
+package control;
 
+import logic.Findable;
 import model.AbstractEntity;
 
 import javax.persistence.EntityManager;
@@ -10,14 +11,14 @@ import javax.persistence.Persistence;
  * Backbone for Facades, the managing classes of the entities
  * @param <E> type of the facade, has to be an AbstractEntity
  */
-public class AbstractFacade<E extends AbstractEntity> implements AutoCloseable, Findable<E> {
+public class AbstractController<E extends AbstractEntity> implements AutoCloseable, Findable<E> {
 
 	private static final EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("thrones");
 
 	private EntityManager entityManager;
 	private Class<E> c;
 
-	AbstractFacade(Class<E> c) {
+	AbstractController(Class<E> c) {
 		this.c = c;
 		entityManager = emFactory.createEntityManager();
 	}
@@ -29,6 +30,7 @@ public class AbstractFacade<E extends AbstractEntity> implements AutoCloseable, 
 	public void persist(E entity) {
 		begin();
 		entityManager.persist(entity);
+		commit();
 	}
 
 	/**
@@ -38,6 +40,7 @@ public class AbstractFacade<E extends AbstractEntity> implements AutoCloseable, 
 	public void merge(E entity) {
 		begin();
 		entityManager.merge(entity);
+		commit();
 	}
 
 	/**
@@ -46,8 +49,7 @@ public class AbstractFacade<E extends AbstractEntity> implements AutoCloseable, 
 	 * of the Id to see if the entity is in the Persistence or not
 	 * @param entity to be persisted or merged
 	 */
-	public void autopersist(E entity) {
-		begin();
+	public void autoPersist(E entity) {
 		if(entity.getId() == null) {
 			persist(entity);
 		} else {
@@ -61,6 +63,7 @@ public class AbstractFacade<E extends AbstractEntity> implements AutoCloseable, 
 	public void remove(E entity) {
 		begin();
 		entityManager.remove(entity);
+		commit();
 	}
 	/**
 	 * Begins the transaction
@@ -75,7 +78,7 @@ public class AbstractFacade<E extends AbstractEntity> implements AutoCloseable, 
 	/**
 	 * Commits the transaction
 	 */
-	public void commit() {
+	private void commit() {
 		entityManager.getTransaction().commit();
 	}
 

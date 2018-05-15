@@ -1,7 +1,7 @@
 package window;
 
-import logic.HouseFacade;
 import panel.AbstractPanel;
+import panel.Menu;
 
 import javax.swing.*;
 
@@ -27,6 +27,22 @@ public class Window extends JFrame {
 		setSize(1280, 720);
 		setTitle("Game of Thrones");
 		setVisible(true);
+
+		loadMenu();
+	}
+
+	private void loadMenu() {
+		changeContent(new Menu());
+	}
+
+	private void changeContent(AbstractPanel panel) {
+		if(content != null) {
+			content.setVisible(false);
+			remove(content);
+		}
+		content = panel;
+		add(content);
+		content.setVisible(true);
 	}
 
 	/**
