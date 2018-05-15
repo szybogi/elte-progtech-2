@@ -1,5 +1,3 @@
-package control;
-
 import window.Window;
 
 import javax.swing.*;

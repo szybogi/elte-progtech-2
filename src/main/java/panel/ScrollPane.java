@@ -1,25 +1,42 @@
 package panel;
 
 import logic.ResizeableElement;
+import model.House;
 
 import javax.swing.*;
 
 public class ScrollPane extends JScrollPane implements ResizeableElement {
 
-	private HouseGrid houseGrid;
-
 	ScrollPane() {
-		setViewportView(houseGrid);
 		setSize(currentSize());
-		houseGrid = new HouseGrid();
-		setHouseGrid();
+		//setHouseGrid();
+		setHouseCreate();
 		setVisible(true);
 		revalidate();
 		repaint();
 	}
 
 	void setHouseGrid() {
-		setViewportView(houseGrid);
+		setViewportView(new HouseList());
+		onResize();
+	}
+
+	void setHouseCreate() {
+		setHouseCreate(null);
+	}
+
+	void setHouseCreate(House house) {
+		setViewportView(new HouseCreate(house));
+		onResize();
+	}
+
+	void setAllianceGrid() {
+		onResize();
+	}
+
+	void setAllianceCreate() {
+		setViewportView(new HouseList()); // TODO: Alliance
+		//setViewportView(new HouseCreate()); // TODO: Alliance
 		onResize();
 	}
 

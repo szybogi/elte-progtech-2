@@ -3,9 +3,7 @@ package panel;
 import control.Controller;
 import control.HouseController;
 import logic.ResizeableElement;
-import model.AbstractEntity;
 import model.House;
-import org.icroco.tablemodel.impl.BeanTableModel;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -14,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
-public class HouseGrid extends JTable implements ResizeableElement {
+public class HouseList extends JTable implements ResizeableElement {
 
 	protected HouseController houseController = (HouseController) Controller.HOUSE.getController();
 
-	public HouseGrid() {
+	public HouseList() {
 		setLayout(new BorderLayout());
 		setSize(currentSize());
 

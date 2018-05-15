@@ -15,4 +15,10 @@ public class HouseController extends AbstractController<House> {
 		super(House.class);
 	}
 
+	public List<House> findAllByName(String name) {
+		return createNamedQuery("findByName")
+				.setParameter("name", name)
+				.getResultList();
+	}
+
 }

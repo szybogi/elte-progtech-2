@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import panel.MenuBar;
 
 /**
  * Window object
@@ -21,7 +22,7 @@ public class Window extends JFrame implements ComponentListener, ResizeableEleme
 	 */
 	private static Window mainWindow;
 
-	public static ContentPane windowContent;
+	private ContentPane windowContent;
 
 	/**
 	 * No Arg constructor sets the default close operation to exit on close,
@@ -37,7 +38,7 @@ public class Window extends JFrame implements ComponentListener, ResizeableEleme
 
 		setLocationRelativeTo(null);
 
-		//setJMenuBar(new MenuBar());
+		setJMenuBar(new MenuBar());
 
 		windowContent = new ContentPane();
 		setContentPane(windowContent);
@@ -99,5 +100,9 @@ public class Window extends JFrame implements ComponentListener, ResizeableEleme
 	@Override
 	public void onResize() {
 
+	}
+
+	public ContentPane getWindowContent() {
+		return windowContent;
 	}
 }
