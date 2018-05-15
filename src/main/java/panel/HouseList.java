@@ -14,9 +14,10 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
-public class HouseList extends JTable implements ResizeableElement {
+public class HouseList extends AbstractPanel implements ResizeableElement {
 
 	protected HouseController houseController = (HouseController) Controller.HOUSE.getController();
+	private Table table = new Table();
 
 	private House selectedHouse;
 
@@ -24,36 +25,25 @@ public class HouseList extends JTable implements ResizeableElement {
 		setLayout(new BorderLayout());
 		setSize(currentSize());
 
-		houseController.findAll().forEach(System.out::println);
-
-
-		House h = House.builder().name("bara").motto("otot").build();
-		House h2 = House.builder().name("bara2").motto("otot2").build();
-		//houseController.autoPersist(h);
-		//houseController.autoPersist(h2);
-
-
-		houseController.findAll().forEach(System.out::println);
-
-
 		Vector<Vector<Object>> data = houseController.findAll().map(House::convert).collect(Collectors.toCollection(Vector::new));
 
 		DefaultTableModel tableModel = new DefaultTableModel(data, House.columns);
-		setModel(tableModel);
+		table.setModel(tableModel);
 
-		getSelectionModel().addListSelectionListener(selectionListener);
+		table.getSelectionModel().addListSelectionListener(selectionListener);
 
-		TableRowSorter<TableModel> sorter = new TableRowSorter<>(getModel());
-		setRowSorter(sorter);
+		TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+		table.setRowSorter(sorter);
 
 		ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<>();
-		for (int i = 0; i < getModel().getColumnCount(); i++) {
+		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
 			sortKeys.add(new RowSorter.SortKey(i, SortOrder.ASCENDING));
 		}
 		sorter.setSortKeys(sortKeys);
 
 
 
+		add(table);
 
 
 
@@ -67,7 +57,7 @@ public class HouseList extends JTable implements ResizeableElement {
 	}
 
 	private ListSelectionListener selectionListener = e -> {
-		House house = (House) ((Vector)((DefaultTableModel) getModel()).getDataVector().get(getSelectedRow())).get(0);
+		House house = (House) ((Vector)((DefaultTableModel) table.getModel()).getDataVector().get(table.getSelectedRow())).get(0);
 		setSelectedHouse(house);
 	};
 
@@ -80,8 +70,4 @@ public class HouseList extends JTable implements ResizeableElement {
 		setSize(currentSize());
 	}
 
-	@Override
-	public boolean isCellEditable(int row, int column) {
-		return false;
-	}
 }
