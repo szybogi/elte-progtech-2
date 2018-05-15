@@ -3,10 +3,17 @@ package panel;
 import logic.Managable;
 import logic.ResizeableElement;
 import model.House;
+import sun.misc.IOUtils;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.sql.Clob;
+import java.sql.SQLException;
+import java.util.Base64;
 
 public class HouseCreate extends AbstractPanel implements Managable, ResizeableElement {
 
@@ -14,6 +21,7 @@ public class HouseCreate extends AbstractPanel implements Managable, ResizeableE
 
 	private JFormattedTextField nameField;
 	private JFormattedTextField mottoField;
+	private JLabel crestField;
 
 	public HouseCreate(House house) {
 		draw();
@@ -35,6 +43,7 @@ public class HouseCreate extends AbstractPanel implements Managable, ResizeableE
 	public void read() {
 		nameField.setText(house.getName());
 		mottoField.setText(house.getMotto());
+
 	}
 
 	@Override
@@ -69,6 +78,29 @@ public class HouseCreate extends AbstractPanel implements Managable, ResizeableE
 
 		return valid;
 	}
+
+	private ActionListener crestUploadButtonAction = e -> {
+		JFileChooser chooser = new JFileChooser();
+		chooser.showOpenDialog(null);
+		final File f = chooser.getSelectedFile();
+		if (f == null) {
+			return;
+		}
+		SwingWorker sw = new SwingWorker() {
+			@Override
+			protected Object doInBackground() throws Exception {
+				house.setCrestIcon(new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(f.getAbsolutePath())))));
+				return null;
+			}
+
+			@Override
+			protected void done() {
+				super.done();
+				crestField.setIcon(house.getCrestIcon());
+			}
+		};
+		sw.execute();
+	};
 
 	private void draw() {
 
@@ -124,7 +156,7 @@ public class HouseCreate extends AbstractPanel implements Managable, ResizeableE
 		gbc_crestLabel.gridy = 2;
 		add(crestLabel, gbc_crestLabel);
 
-		JFormattedTextField crestField = new JFormattedTextField();
+		crestField = new JLabel();
 		crestField.setToolTipText("dddddsrs");
 		GridBagConstraints gbc_crestField = new GridBagConstraints();
 		gbc_crestField.insets = new Insets(0, 0, 5, 5);
@@ -132,6 +164,15 @@ public class HouseCreate extends AbstractPanel implements Managable, ResizeableE
 		gbc_crestField.gridx = 1;
 		gbc_crestField.gridy = 2;
 		add(crestField, gbc_crestField);
+
+		JButton crestUploadButton = new JButton("Feltöltés");
+		GridBagConstraints gbc_crestUploadButton = new GridBagConstraints();
+		gbc_crestUploadButton.insets = new Insets(0, 0, 5, 5);
+		gbc_crestUploadButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_crestUploadButton.gridx = 1;
+		gbc_crestUploadButton.gridy = 3;
+		crestUploadButton.addActionListener(crestUploadButtonAction);
+		add(crestUploadButton, gbc_crestUploadButton);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -141,7 +182,7 @@ public class HouseCreate extends AbstractPanel implements Managable, ResizeableE
 		gbc_buttonPane.insets = new Insets(0, 0, 5, 5);
 		gbc_buttonPane.fill = GridBagConstraints.HORIZONTAL;
 		gbc_buttonPane.gridx = 1;
-		gbc_buttonPane.gridy = 3;
+		gbc_buttonPane.gridy = 4;
 		add(crestField, gbc_crestField);
 		add(buttonPane, gbc_buttonPane);
 

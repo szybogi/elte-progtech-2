@@ -3,11 +3,15 @@ package model;
 import logic.Rowable;
 import lombok.*;
 
+import javax.imageio.ImageIO;
 import javax.persistence.*;
+import javax.swing.*;
 import java.io.Serializable;
 import java.sql.Clob;
 import java.util.List;
 import java.util.Vector;
+
+import static panel.AbstractPanel.scaleImage;
 
 /**
  * Describes a House
@@ -45,10 +49,29 @@ public class House extends AbstractEntity implements Rowable, Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Character> characters;
 
+	@Transient
+	private ImageIcon crestIcon;
+
+	{
+		SwingWorker sw = new SwingWorker() {
+			@Override
+			protected Object doInBackground() throws Exception {
+				setCrestIcon(new ImageIcon(scaleImage(120, 120, ImageIO.read(getCrest().getAsciiStream()))));
+				return null;
+			}
+
+			@Override
+			protected void done() {
+				super.done();
+			}
+		};
+		sw.execute();
+	}
+
 	@Override
 	public Vector<Object> convert() {
 		Vector<Object> data = new Vector<>();
-		data.add(name);
+		data.add(this);
 		data.add(motto);
 		return data;
 	}
@@ -56,8 +79,12 @@ public class House extends AbstractEntity implements Rowable, Serializable {
 	public static Vector<Object> columns = new Vector<>();
 
 	static {
-		columns.add("name");
-		columns.add("motto");
+		columns.add("Név");
+		columns.add("Mottó");
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
 }

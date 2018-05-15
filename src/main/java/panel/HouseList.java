@@ -6,8 +6,10 @@ import logic.ResizeableElement;
 import model.House;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.stream.Collectors;
@@ -15,6 +17,8 @@ import java.util.stream.Collectors;
 public class HouseList extends JTable implements ResizeableElement {
 
 	protected HouseController houseController = (HouseController) Controller.HOUSE.getController();
+
+	private House selectedHouse;
 
 	public HouseList() {
 		setLayout(new BorderLayout());
@@ -37,6 +41,8 @@ public class HouseList extends JTable implements ResizeableElement {
 		DefaultTableModel tableModel = new DefaultTableModel(data, House.columns);
 		setModel(tableModel);
 
+		getSelectionModel().addListSelectionListener(selectionListener);
+
 		TableRowSorter<TableModel> sorter = new TableRowSorter<>(getModel());
 		setRowSorter(sorter);
 
@@ -45,9 +51,28 @@ public class HouseList extends JTable implements ResizeableElement {
 			sortKeys.add(new RowSorter.SortKey(i, SortOrder.ASCENDING));
 		}
 		sorter.setSortKeys(sortKeys);
+
+
+
+
+
+
+
+
+
+
 		setVisible(true);
 		revalidate();
 		repaint();
+	}
+
+	private ListSelectionListener selectionListener = e -> {
+		House house = (House) ((Vector)((DefaultTableModel) getModel()).getDataVector().get(getSelectedRow())).get(0);
+		setSelectedHouse(house);
+	};
+
+	public void setSelectedHouse(House selectedHouse) {
+		this.selectedHouse = selectedHouse;
 	}
 
 	@Override
