@@ -2,6 +2,7 @@ package control;
 
 import model.House;
 
+import javax.swing.*;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.List;
@@ -21,4 +22,16 @@ public class HouseController extends AbstractController<House> {
 				.getResultList();
 	}
 
+	public Stream<House> findAllMinus(List<House> houses) {
+		if(houses != null) {
+			return findAll().filter(house -> !houses.contains(house));
+		} else return findAll();
+	}
+
+	public Vector<Object> convertNameDelete(House house) {
+		Vector<Object> vector = new Vector<>();
+		vector.add(house);
+		//vector.add("rem");
+		return vector;
+	}
 }

@@ -3,12 +3,10 @@ package panel;
 import logic.Managable;
 import logic.ResizeableElement;
 import model.Alliance;
-import model.Status;
+import model.House;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Vector;
@@ -20,15 +18,17 @@ public class AllianceCreate extends Panel implements Managable, ResizeableElemen
 
 	private JFormattedTextField dateFromField;
 	private JFormattedTextField dateToField;
+	private JComboBox<House> houseJComboBox;
 
 	public AllianceCreate(Alliance alliance) {
-		draw();
+
 
 		if (alliance != null) {
 			this.alliance = alliance;
 		} else {
 			this.alliance = new Alliance();
 		}
+		draw();
 		read();
 
 		setVisible(true);
@@ -40,8 +40,12 @@ public class AllianceCreate extends Panel implements Managable, ResizeableElemen
 	@Override
 	public void read() {
 		try {
-			dateFromField.setText(dateFromField.getFormatter().valueToString(alliance.getDateFrom()));
-			dateToField.setText(dateToField.getFormatter().valueToString(alliance.getDateTo()));
+			if(dateFromField != null) {
+				dateFromField.setText(dateFromField.getFormatter().valueToString(alliance.getDateFrom()));
+			}
+			if(dateToField != null) {
+				dateToField.setText(dateToField.getFormatter().valueToString(alliance.getDateTo()));
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -58,19 +62,19 @@ public class AllianceCreate extends Panel implements Managable, ResizeableElemen
 	public Boolean validation() {
 		Boolean valid = true;
 
-		if(dateFromField.getText() != null && !dateFromField.getText().isEmpty()) {
+		if(dateFromField != null && dateFromField.getText() != null && !dateFromField.getText().isEmpty()) {
 			try {
 				alliance.setDateFrom((Date) dateFromField.getFormatter().stringToValue(dateFromField.getText()));
 			} catch (ParseException e) {
 				valid = false;
 				dateFromField.setBackground(errorColor);
 			}
-		} else {
+		} else if(dateFromField != null) {
 			valid = false;
 			dateFromField.setBackground(errorColor);
 		}
 
-		if(dateToField.getText() != null && !dateToField.getText().isEmpty()) {
+		if(dateToField != null && dateToField.getText() != null && !dateToField.getText().isEmpty()) {
 			try {
 				alliance.setDateTo((Date) dateToField.getFormatter().stringToValue(dateToField.getText()));
 			} catch (ParseException e) {
@@ -79,11 +83,20 @@ public class AllianceCreate extends Panel implements Managable, ResizeableElemen
 			}
 		}
 
+		System.out.println("alliance.getDateFrom()" + alliance.getDateFrom());
+		System.out.println("alliance.getDateTp()" + alliance.getDateTo());
+		if(dateFromField != null && allianceController.validDateRange(alliance.getHouses(), alliance.getDateFrom(), alliance.getDateTo())) {
+			dateFromField.setBackground(errorColor);
+			valid = false;
+		}
+
 		return valid;
 	}
 
 
 	private void draw() {
+		validation();
+		removeAll();
 		setSize(currentSize());
 		setLayout(null);
 		setBackground(backGroundColor);
@@ -131,6 +144,67 @@ public class AllianceCreate extends Panel implements Managable, ResizeableElemen
 		add(dateToField, gbc_dateToField);
 
 
+
+		Vector<House> houses = houseController.findAllMinus(alliance.getHouses()).collect(Collectors.toCollection(Vector::new));
+		houseJComboBox = new JComboBox<>(houses);
+		houseJComboBox.setEnabled(!houses.isEmpty());
+		GridBagConstraints gbc_houseJComboBox = new GridBagConstraints();
+		gbc_houseJComboBox.anchor = GridBagConstraints.EAST;
+		gbc_houseJComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_houseJComboBox.gridx = 1;
+		gbc_houseJComboBox.gridy = 2;
+		add(houseJComboBox, gbc_houseJComboBox);
+
+
+		JButton houseAddButton = new JButton("Hozzáadás");
+		houseAddButton.setEnabled(!houses.isEmpty() || alliance.getHouses().size() >= 2);
+		houseAddButton.addActionListener(e -> {
+			if (!alliance.getHouses().contains((House) houseJComboBox.getSelectedItem())) {
+				alliance.getHouses().add((House) houseJComboBox.getSelectedItem());
+				houseJComboBox.setBackground(neutralColor);
+			} else {
+				houseJComboBox.setBackground(errorColor);
+			}
+			draw();
+		});
+
+
+		GridBagConstraints gbc_houseAddButton = new GridBagConstraints();
+		gbc_houseAddButton.anchor = GridBagConstraints.EAST;
+		gbc_houseAddButton.insets = new Insets(0, 0, 5, 5);
+		gbc_houseAddButton.gridx = 0;
+		gbc_houseAddButton.gridy = 2;
+		add(houseAddButton, gbc_houseAddButton);
+
+
+		JLabel tableLabel = new JLabel("Felek:");
+		GridBagConstraints gbc_tableLabel = new GridBagConstraints();
+		gbc_tableLabel.anchor = GridBagConstraints.EAST;
+		gbc_tableLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_tableLabel.gridx = 0;
+		gbc_tableLabel.gridy = 3;
+		add(tableLabel, gbc_tableLabel);
+
+
+		GridBagConstraints gbc_tableField = new GridBagConstraints();
+		gbc_tableField.insets = new Insets(0, 0, 5, 5);
+		gbc_tableField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tableField.gridx = 1;
+		gbc_tableField.gridy = 3;
+
+		Table table = new Table();
+		Vector<Object> column = new Vector<>();
+		column.add("Név");
+
+		Vector<Vector<Object>> abstractEntities = new Vector<>();
+		if(alliance.getHouses() != null) {
+			abstractEntities = alliance.getHouses().stream().map(house -> houseController.convertNameDelete(house)).collect(Collectors.toCollection(Vector::new));
+		}
+		table.init(abstractEntities, column);
+
+		add(table, gbc_tableField);
+
+
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		buttonPane.setBackground(getBackground());
@@ -150,9 +224,9 @@ public class AllianceCreate extends Panel implements Managable, ResizeableElemen
 		gbc_buttonPane.insets = new Insets(0, 0, 5, 5);
 		gbc_buttonPane.fill = GridBagConstraints.HORIZONTAL;
 		gbc_buttonPane.gridx = 1;
-		gbc_buttonPane.gridy = 2;
+		gbc_buttonPane.gridy = 4;
 		add(buttonPane, gbc_buttonPane);
-
+		read();
 	}
 
 	@Override

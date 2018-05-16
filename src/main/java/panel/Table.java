@@ -22,7 +22,7 @@ public class Table extends JTable implements ResizeableElement {
 	}
 
 	public void init(Vector<Vector<Object>> data, Vector<Object> columns) {
-		TableModel tableModel = new TableModel(data, columns);
+		panel.TableModel tableModel = new panel.TableModel(data, columns);
 		setModel(tableModel);
 
 		getSelectionModel().addListSelectionListener(selectionListener);
@@ -46,7 +46,7 @@ public class Table extends JTable implements ResizeableElement {
 
 	private ListSelectionListener selectionListener = e -> {
 		if(e.getFirstIndex() == e.getLastIndex()) {
-			AbstractEntity abstractEntity = (AbstractEntity) ((Vector)((DefaultTableModel) getModel()).getDataVector().elementAt(convertRowIndexToModel(e.getLastIndex()))).elementAt(0);
+			AbstractEntity abstractEntity = (AbstractEntity) ((Vector)((TableModel) getModel()).getDataVector().elementAt(convertRowIndexToModel(e.getLastIndex()))).elementAt(0);
 			if(this.selected != null && this.selected.equals(abstractEntity)) {
 				Window.getMainWindow().getWindowContent().getScrollPane().openEntity(abstractEntity);
 			} else {

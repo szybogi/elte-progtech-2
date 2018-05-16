@@ -9,6 +9,7 @@ import java.util.Vector;
 public class TableModel extends DefaultTableModel {
 
 	private List<Integer> imageColumns = new ArrayList<>();
+	private List<Integer> buttonColumns = new ArrayList<>();
 
 
 	public TableModel(Vector data, Vector columnNames) {
@@ -29,7 +30,9 @@ public class TableModel extends DefaultTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int column) {
-		if(imageColumns.contains(column)) {
+		if(buttonColumns.contains(column)) {
+			return JButton.class;
+		} else if(imageColumns.contains(column)) {
 			return ImageIcon.class;
 		} else {
 			return super.getColumnClass(column);
