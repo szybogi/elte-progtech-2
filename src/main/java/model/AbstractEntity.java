@@ -22,7 +22,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Seri
 	private static final long serialVersionUID = -4386653953478566832L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	protected Integer id;
 
 	@Override

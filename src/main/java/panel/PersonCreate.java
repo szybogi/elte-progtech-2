@@ -131,7 +131,7 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 
 		Vector<Status> statuses = statusController.findAll().collect(Collectors.toCollection(Vector::new));
 		statusField = new JComboBox<>(statuses);
-		statusField.setSelectedItem(statusController.getCharacterStatusAlive());
+		statusField.setSelectedItem(statusController.getPersonStatusAlive());
 
 		GridBagConstraints gbc_statusField = new GridBagConstraints();
 		gbc_statusField.insets = new Insets(0, 0, 5, 5);

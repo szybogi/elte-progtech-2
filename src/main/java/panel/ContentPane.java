@@ -14,7 +14,6 @@ public class ContentPane extends JLayeredPane implements ResizeableElement {
 		setLayout(null);
 		setBackground(new Color(130, 162, 182, 255));
 
-
 		scrollPane = new ScrollPane();
 		add(scrollPane);
 		setVisible(true);

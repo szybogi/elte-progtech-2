@@ -25,7 +25,6 @@ public class Table extends JTable implements ResizeableElement {
 		TableModel tableModel = new TableModel(data, columns);
 		setModel(tableModel);
 
-
 		getSelectionModel().addListSelectionListener(selectionListener);
 		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) getModel());
 		ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<>();
@@ -47,11 +46,11 @@ public class Table extends JTable implements ResizeableElement {
 
 	private ListSelectionListener selectionListener = e -> {
 		if(e.getFirstIndex() == e.getLastIndex()) {
-			AbstractEntity house = (AbstractEntity) ((Vector)((DefaultTableModel) getModel()).getDataVector().elementAt(convertRowIndexToModel(e.getLastIndex()))).elementAt(0);
-			if(this.selected != null && this.selected.equals(house)) {
-				Window.getMainWindow().getWindowContent().getScrollPane().openEntity(house);
+			AbstractEntity abstractEntity = (AbstractEntity) ((Vector)((DefaultTableModel) getModel()).getDataVector().elementAt(convertRowIndexToModel(e.getLastIndex()))).elementAt(0);
+			if(this.selected != null && this.selected.equals(abstractEntity)) {
+				Window.getMainWindow().getWindowContent().getScrollPane().openEntity(abstractEntity);
 			} else {
-				this.selected = house;
+				this.selected = abstractEntity;
 			}
 		}
 	};

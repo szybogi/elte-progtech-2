@@ -1,5 +1,6 @@
 package model;
 
+import control.StatusController;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,8 +31,8 @@ public class Status extends AbstractEntity implements Serializable {
 	@Override
 	public String toString() {
 		switch (name) {
-			case "alive" : return "Él";
-			case "dead" : return "Halott";
+			case StatusController.PERSON_STATUS_ALIVE: return "Él";
+			case StatusController.PERSON_STATUS_DEAD: return "Halott";
 			default: return "";
 		}
 	}

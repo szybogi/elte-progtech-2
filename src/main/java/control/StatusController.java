@@ -7,23 +7,23 @@ public class StatusController extends AbstractController<Status> {
 	private Status statusDead;
 	private Status statusAlive;
 
-	private static final String CHARACTER_STATUS_DEAD = "DEAD";
-	private static final String CHARACTER_STATUS_ALIVE = "ALIVE";
+	public static final String PERSON_STATUS_DEAD = "dead";
+	public static final String PERSON_STATUS_ALIVE = "alive";
 
 	StatusController() {
 		super(Status.class);
 	}
 
-	public Status getCharacterStatusDead() {
+	public Status getPersonStatusDead() {
 		if (statusDead == null) {
-			statusDead = findByName(CHARACTER_STATUS_DEAD);
+			statusDead = findByName(PERSON_STATUS_DEAD);
 		}
 		return statusDead;
 	}
 
-	public Status getCharacterStatusAlive() {
+	public Status getPersonStatusAlive() {
 		if (statusAlive == null) {
-			statusAlive = findByName(CHARACTER_STATUS_ALIVE);
+			statusAlive = findByName(PERSON_STATUS_ALIVE);
 		}
 		return statusAlive;
 	}

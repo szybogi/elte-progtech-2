@@ -13,7 +13,7 @@ public class ScrollPane extends JScrollPane implements ResizeableElement {
 	ScrollPane() {
 		setSize(currentSize());
 		//setHouseList();
-		setHouseCreate();
+		setCharacterCreate();
 		setVisible(true);
 		revalidate();
 		repaint();
@@ -25,7 +25,7 @@ public class ScrollPane extends JScrollPane implements ResizeableElement {
 		} else if(abstractEntity instanceof Person) {
 			setCharacterCreate((Person) abstractEntity);
 		} else if(abstractEntity instanceof Alliance) {
-
+			setAllianceCreate((Alliance) abstractEntity);
 		}
 	}
 
