@@ -2,7 +2,7 @@ package control;
 
 public enum Controller {
 	HOUSE(new HouseController()),
-	CHARACTER(new CharacterController()),
+	PERSON(new PersonController()),
 	ALLIANCE(new AllianceController()),
 	STATUS(new StatusController());
 

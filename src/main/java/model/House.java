@@ -2,16 +2,14 @@ package model;
 
 import logic.Rowable;
 import lombok.*;
-import org.apache.derby.iapi.types.RawToBinaryFormatStream;
 
 import javax.imageio.ImageIO;
 import javax.persistence.*;
 import javax.swing.*;
+import javax.validation.constraints.NotNull;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Blob;
-import java.sql.Clob;
 import java.util.List;
 import java.util.Vector;
 
@@ -40,18 +38,24 @@ public class House extends AbstractEntity implements Rowable, Serializable {
 	private static final long serialVersionUID = -8049832814482377930L;
 
 	@Column(unique = true)
+	@NotNull
 	private String name;
 
+	@NotNull
+	private String crestName;
+
 	@Lob
+	@NotNull
 	private byte[] crest;
 
+	@NotNull
 	private String motto;
 
 	@ManyToMany(mappedBy = "houses")
 	private List<Alliance> alliances;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Character> characters;
+	private List<Person> people;
 
 	@Transient
 	private ImageIcon crestIcon;
@@ -61,6 +65,7 @@ public class House extends AbstractEntity implements Rowable, Serializable {
 		Vector<Object> data = new Vector<>();
 		data.add(this);
 		data.add(motto);
+		data.add(crestName);
 		convertBlobToIcon();
 		data.add(crestIcon);
 		return data;
@@ -71,6 +76,7 @@ public class House extends AbstractEntity implements Rowable, Serializable {
 	static {
 		columns.add("Név");
 		columns.add("Mottó");
+		columns.add("Címer neve");
 		columns.add("Címer");
 	}
 
@@ -80,10 +86,12 @@ public class House extends AbstractEntity implements Rowable, Serializable {
 	}
 
 	public void convertBlobToIcon() {
-		try {
-			setCrestIcon(new ImageIcon(scaleImage(120, 120, ImageIO.read(new ByteArrayInputStream(getCrest())))));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(crest != null) {
+			try {
+				setCrestIcon(new ImageIcon(scaleImage(120, 120, ImageIO.read(new ByteArrayInputStream(getCrest())))));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

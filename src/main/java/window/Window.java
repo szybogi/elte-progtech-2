@@ -12,36 +12,26 @@ import java.awt.event.ComponentListener;
 import panel.MenuBar;
 
 /**
- * Window object
- * Used to store Panels which will hold the content
+ * Ez az ablak osztály tárolja a megjelenítendő elemeket.
  */
 public class Window extends JFrame implements ComponentListener, ResizeableElement {
 	/**
-	 * Main Window global field, created on the start of the program
-	 * If this window is closed, the programs process stops
+	 * Fő ablak mező, a program indulásakor készül el, ha bezárják, a program megáll
 	 */
 	private static Window mainWindow;
 
-	private ContentPane windowContent;
-
 	/**
-	 * No Arg constructor sets the default close operation to exit on close,
-	 * so the process stops when the user closes the window
+	 * Konstruktor
 	 */
 	private Window() {
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setSize(currentSize());
-		setTitle(PropertyLoader.getProperties().getProperty(PropertyLoader.WINDOW_TITLE));
-		//loadMenu();
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // Ablak bezáráskor megáll a process
+		setSize(currentSize()); // Beállítja az alapértelmezett méretet
+		setTitle(PropertyLoader.getProperties().getProperty(PropertyLoader.WINDOW_TITLE)); // Beállítja az ablak címét
+		setResizable(PropertyLoader.getProperties().getBoolean(PropertyLoader.WINDOW_RESIZABLE)); // Beállítja az ablak átméretezhetőségét
+		setLocationRelativeTo(null); // Középen induljon az ablak
 
-		setResizable(PropertyLoader.getProperties().getBoolean(PropertyLoader.WINDOW_RESIZABLE));
-
-		setLocationRelativeTo(null);
-
-		setJMenuBar(new MenuBar());
-
-		windowContent = new ContentPane();
-		setContentPane(windowContent);
+		setJMenuBar(new MenuBar()); // Beállítja a menüsávot
+		setContentPane(new ContentPane());
 
 		addComponentListener(this);
 		getRootPane().setFocusable(true);
@@ -52,9 +42,9 @@ public class Window extends JFrame implements ComponentListener, ResizeableEleme
 	}
 
 	/**
-	 * Lazy instantiation of the Singleton main window
+	 * Lusta inicializációja az ablaknak
 	 *
-	 * @return the main window
+	 * @return főablak
 	 */
 	public static Window getMainWindow() {
 		if (mainWindow == null) {
@@ -72,6 +62,11 @@ public class Window extends JFrame implements ComponentListener, ResizeableEleme
 		}
 	}
 
+	/**
+	 * A globális Property objektumban frissíti a jelenlegi ablakméretet
+	 * Majd meghívja a onResize függvényt az összes ez a Window-ban található ResizeableElement interface-es elemre
+	 * @param e event
+	 */
 	@Override
 	public void componentResized(ComponentEvent e) {
 		PropertyLoader.getProperties().setProperty(PropertyLoader.WINDOW_WIDTH, Integer.toString(getWidth() - 16));
@@ -103,6 +98,6 @@ public class Window extends JFrame implements ComponentListener, ResizeableEleme
 	}
 
 	public ContentPane getWindowContent() {
-		return windowContent;
+		return (ContentPane) getContentPane();
 	}
 }

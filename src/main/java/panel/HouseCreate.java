@@ -16,6 +16,7 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 
 	private JFormattedTextField nameField;
 	private JFormattedTextField mottoField;
+	private JFormattedTextField crestName;
 	private JLabel crestField;
 
 	public HouseCreate(House house) {
@@ -38,6 +39,7 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 	public void read() {
 		nameField.setText(house.getName());
 		mottoField.setText(house.getMotto());
+		crestName.setText(house.getCrestName());
 		crestField.setIcon(house.getCrestIcon());
 	}
 
@@ -51,6 +53,7 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 	public Boolean validation() {
 		house.setName(nameField.getText());
 		house.setMotto(mottoField.getText());
+		house.setCrestName(crestName.getText());
 
 		Boolean valid = true;
 
@@ -144,27 +147,43 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 		gbc_mottoField.gridy = 1;
 		add(mottoField, gbc_mottoField);
 
-		JLabel crestLabel = new JLabel("Ikon:");
+		JLabel crestNameLabel = new JLabel("Címer neve:");
+		GridBagConstraints gbc_crestNameLabel = new GridBagConstraints();
+		gbc_crestNameLabel.anchor = GridBagConstraints.EAST;
+		gbc_crestNameLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_crestNameLabel.gridx = 0;
+		gbc_crestNameLabel.gridy = 2;
+		add(crestNameLabel, gbc_crestNameLabel);
+
+		crestName = new JFormattedTextField();
+		GridBagConstraints gbc_crestName = new GridBagConstraints();
+		gbc_crestName.insets = new Insets(0, 0, 5, 5);
+		gbc_crestName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_crestName.gridx = 1;
+		gbc_crestName.gridy = 2;
+		add(crestName, gbc_crestName);
+
+		JLabel crestLabel = new JLabel("Címer:");
 		GridBagConstraints gbc_crestLabel = new GridBagConstraints();
 		gbc_crestLabel.anchor = GridBagConstraints.EAST;
 		gbc_crestLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_crestLabel.gridx = 0;
-		gbc_crestLabel.gridy = 2;
+		gbc_crestLabel.gridy = 3;
 		add(crestLabel, gbc_crestLabel);
 
 		crestField = new JLabel();
-		crestField.setToolTipText("dddddsrs");
+		crestField.setToolTipText("Kép");
 		GridBagConstraints gbc_crestField = new GridBagConstraints();
 		gbc_crestField.insets = new Insets(0, 0, 5, 5);
 		gbc_crestField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_crestField.gridx = 1;
-		gbc_crestField.gridy = 2;
+		gbc_crestField.gridy = 3;
 		add(crestField, gbc_crestField);
 
 		JButton crestUploadButton = new JButton("Feltöltés");
 		GridBagConstraints gbc_crestUploadButton = new GridBagConstraints();
 		gbc_crestUploadButton.insets = new Insets(0, 0, 5, 5);
-		gbc_crestUploadButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_crestUploadButton.fill = GridBagConstraints.EAST;
 		gbc_crestUploadButton.gridx = 1;
 		gbc_crestUploadButton.gridy = 3;
 		crestUploadButton.addActionListener(crestUploadButtonAction);

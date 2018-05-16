@@ -25,6 +25,10 @@ public class Status extends AbstractEntity implements Serializable {
 	private String name;
 
 	@OneToMany
-	private List<Character> characters;
+	private List<Person> people;
 
+	@Override
+	public String toString() {
+		return name;
+	}
 }

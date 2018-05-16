@@ -17,7 +17,6 @@ public class ComponentTools {
 						.map(Container.class::cast)
 						.flatMap(c -> findComponents(c, componentType).stream())
 		).collect(Collectors.toList());
-
 	}
 
 }

@@ -10,7 +10,7 @@ public class Panel extends JPanel {
 
 	protected HouseController houseController = (HouseController) Controller.HOUSE.getController();
 	protected StatusController statusController = (StatusController) Controller.STATUS.getController();
-	protected CharacterController characterController = (CharacterController) Controller.CHARACTER.getController();
+	protected PersonController personController = (PersonController) Controller.PERSON.getController();
 	protected AllianceController allianceController = (AllianceController) Controller.ALLIANCE.getController();
 
 	protected Color errorColor = new Color(255, 199, 189, 255);

@@ -1,7 +1,10 @@
 package panel;
 
 import logic.ResizeableElement;
+import model.AbstractEntity;
+import model.Alliance;
 import model.House;
+import model.Person;
 
 import javax.swing.*;
 
@@ -14,6 +17,16 @@ public class ScrollPane extends JScrollPane implements ResizeableElement {
 		setVisible(true);
 		revalidate();
 		repaint();
+	}
+
+	void openEntity(AbstractEntity abstractEntity) {
+		if(abstractEntity instanceof House) {
+			setHouseCreate((House) abstractEntity);
+		} else if(abstractEntity instanceof Person) {
+			setCharacterCreate((Person) abstractEntity);
+		} else if(abstractEntity instanceof Alliance) {
+
+		}
 	}
 
 	void setHouseList() {
@@ -30,13 +43,31 @@ public class ScrollPane extends JScrollPane implements ResizeableElement {
 		onResize();
 	}
 
-	void setAllianceGrid() {
+
+	void setAllianceList() {
 		onResize();
 	}
 
 	void setAllianceCreate() {
-		setViewportView(new HouseList()); // TODO: Alliance
-		//setViewportView(new HouseCreate()); // TODO: Alliance
+		setAllianceCreate(null); // TODO: Alliance
+		onResize();
+	}
+
+	void setAllianceCreate(Alliance allianceCreate) {
+		setViewportView(new PersonList()); // TODO: Alliance
+		onResize();
+	}
+
+	void setPersonList() {
+		setViewportView(new PersonList());
+	}
+
+	void setCharacterCreate() {
+		setCharacterCreate(null);
+	}
+
+	void setCharacterCreate(Person person) {
+		setViewportView(new PersonCreate(person));
 		onResize();
 	}
 

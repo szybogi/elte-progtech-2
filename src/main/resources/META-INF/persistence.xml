@@ -4,7 +4,7 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="thrones" transaction-type="RESOURCE_LOCAL">
         <class>model.House</class>
-        <class>model.Character</class>
+        <class>model.Person</class>
         <class>model.Status</class>
         <class>model.Alliance</class>
         <properties>

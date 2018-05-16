@@ -21,138 +21,213 @@
     <table id="13" parent="2" name="ALLIANCE"/>
     <table id="14" parent="2" name="ALLIANCE_HOUSE"/>
     <table id="15" parent="2" name="HOUSE"/>
-    <table id="16" parent="2" name="HOUSE_CHARACTER"/>
-    <table id="17" parent="2" name="STATUS"/>
-    <table id="18" parent="2" name="STATUS_CHARACTER"/>
-    <column id="19" parent="13" name="ID">
+    <table id="16" parent="2" name="HOUSE_PERSON"/>
+    <table id="17" parent="2" name="PERSON"/>
+    <table id="18" parent="2" name="STATUS"/>
+    <table id="19" parent="2" name="STATUS_PERSON"/>
+    <column id="20" parent="13" name="ID">
       <Position>1</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <DefaultExpression>GENERATED_BY_DEFAULT</DefaultExpression>
     </column>
-    <column id="20" parent="13" name="DATEFROM">
+    <column id="21" parent="13" name="DATEFROM">
       <Position>2</Position>
       <DataType>DATE|91s</DataType>
     </column>
-    <column id="21" parent="13" name="DATETO">
+    <column id="22" parent="13" name="DATETO">
       <Position>3</Position>
       <DataType>DATE|91s</DataType>
     </column>
-    <key id="22" parent="13" name="SQL180516095020460">
+    <key id="23" parent="13" name="SQL180516113909750">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="23" parent="14" name="HOUSES_ID">
+    <column id="24" parent="14" name="HOUSES_ID">
       <Position>1</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="24" parent="14" name="ALLIANCES_ID">
+    <column id="25" parent="14" name="ALLIANCES_ID">
       <Position>2</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="25" parent="14" name="SQL180516095020470">
+    <key id="26" parent="14" name="SQL180516113909770">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>HOUSES_ID
 ALLIANCES_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="26" parent="14" name="LLIANCEHOUSEHSESID">
+    <foreign-key id="27" parent="14" name="LLIANCEHOUSEHSESID">
       <ColNames>HOUSES_ID</ColNames>
       <RefSchemaName>APP</RefSchemaName>
       <RefTableName>HOUSE</RefTableName>
-      <RefKeyName>SQL180516095020391</RefKeyName>
+      <RefKeyName>SQL180516113909671</RefKeyName>
       <RefColNames>ID</RefColNames>
     </foreign-key>
-    <foreign-key id="27" parent="14" name="LLNCEHOUSELLNCESID">
+    <foreign-key id="28" parent="14" name="LLNCEHOUSELLNCESID">
       <ColNames>ALLIANCES_ID</ColNames>
       <RefSchemaName>APP</RefSchemaName>
       <RefTableName>ALLIANCE</RefTableName>
-      <RefKeyName>SQL180516095020460</RefKeyName>
+      <RefKeyName>SQL180516113909750</RefKeyName>
       <RefColNames>ID</RefColNames>
     </foreign-key>
-    <column id="28" parent="15" name="ID">
+    <column id="29" parent="15" name="ID">
       <Position>1</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <DefaultExpression>GENERATED_BY_DEFAULT</DefaultExpression>
     </column>
-    <column id="29" parent="15" name="CREST">
+    <column id="30" parent="15" name="CREST">
       <Position>2</Position>
       <DataType>BLOB|2004s</DataType>
     </column>
-    <column id="30" parent="15" name="MOTTO">
+    <column id="31" parent="15" name="CRESTNAME">
       <Position>3</Position>
       <DataType>VARCHAR(255)|12s</DataType>
     </column>
-    <column id="31" parent="15" name="NAME">
+    <column id="32" parent="15" name="MOTTO">
       <Position>4</Position>
       <DataType>VARCHAR(255)|12s</DataType>
     </column>
-    <index id="32" parent="15" name="SQL180516095020390">
+    <column id="33" parent="15" name="NAME">
+      <Position>5</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+    </column>
+    <index id="34" parent="15" name="SQL180516113909670">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>NAME</ColNames>
     </index>
-    <key id="33" parent="15" name="SQL180516095020391">
+    <key id="35" parent="15" name="SQL180516113909671">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="34" parent="16" name="HOUSE_ID">
+    <column id="36" parent="16" name="HOUSE_ID">
       <Position>1</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="35" parent="16" name="CHARACTERS_ID">
+    <column id="37" parent="16" name="PEOPLE_ID">
       <Position>2</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="36" parent="16" name="SQL180516095020490">
+    <key id="38" parent="16" name="SQL180516113909790">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>HOUSE_ID
-CHARACTERS_ID</ColNames>
+PEOPLE_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="37" parent="17" name="ID">
+    <foreign-key id="39" parent="16" name="HOUSEPERSONHOUSEID">
+      <ColNames>HOUSE_ID</ColNames>
+      <RefSchemaName>APP</RefSchemaName>
+      <RefTableName>HOUSE</RefTableName>
+      <RefKeyName>SQL180516113909671</RefKeyName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
+    <foreign-key id="40" parent="16" name="HUSEPERSONPEOPLEID">
+      <ColNames>PEOPLE_ID</ColNames>
+      <RefSchemaName>APP</RefSchemaName>
+      <RefTableName>PERSON</RefTableName>
+      <RefKeyName>SQL180516113909720</RefKeyName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
+    <column id="41" parent="17" name="ID">
       <Position>1</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <DefaultExpression>GENERATED_BY_DEFAULT</DefaultExpression>
     </column>
-    <column id="38" parent="17" name="NAME">
+    <column id="42" parent="17" name="ARMYCOUNT">
       <Position>2</Position>
+      <DataType>INTEGER|4s</DataType>
+    </column>
+    <column id="43" parent="17" name="NAME">
+      <Position>3</Position>
       <DataType>VARCHAR(255)|12s</DataType>
     </column>
-    <index id="39" parent="17" name="SQL180516095020440">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>NAME</ColNames>
-    </index>
-    <key id="40" parent="17" name="SQL180516095020441">
+    <column id="44" parent="17" name="HOUSE_ID">
+      <Position>4</Position>
+      <DataType>INTEGER|4s</DataType>
+    </column>
+    <column id="45" parent="17" name="STATUS_ID">
+      <Position>5</Position>
+      <DataType>INTEGER|4s</DataType>
+    </column>
+    <key id="46" parent="17" name="SQL180516113909720">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="41" parent="18" name="STATUS_ID">
+    <foreign-key id="47" parent="17" name="FK_PERSON_HOUSE_ID">
+      <ColNames>HOUSE_ID</ColNames>
+      <RefSchemaName>APP</RefSchemaName>
+      <RefTableName>HOUSE</RefTableName>
+      <RefKeyName>SQL180516113909671</RefKeyName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
+    <foreign-key id="48" parent="17" name="PERSON_STATUS_ID">
+      <ColNames>STATUS_ID</ColNames>
+      <RefSchemaName>APP</RefSchemaName>
+      <RefTableName>STATUS</RefTableName>
+      <RefKeyName>SQL180516113909731</RefKeyName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
+    <column id="49" parent="18" name="ID">
+      <Position>1</Position>
+      <DataType>INTEGER|4s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DefaultExpression>GENERATED_BY_DEFAULT</DefaultExpression>
+    </column>
+    <column id="50" parent="18" name="NAME">
+      <Position>2</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+    </column>
+    <index id="51" parent="18" name="SQL180516113909730">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NAME</ColNames>
+    </index>
+    <key id="52" parent="18" name="SQL180516113909731">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="53" parent="19" name="STATUS_ID">
       <Position>1</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="42" parent="18" name="CHARACTERS_ID">
+    <column id="54" parent="19" name="PEOPLE_ID">
       <Position>2</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="43" parent="18" name="SQL180516095020500">
+    <key id="55" parent="19" name="SQL180516113909800">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>STATUS_ID
-CHARACTERS_ID</ColNames>
+PEOPLE_ID</ColNames>
       <Primary>1</Primary>
     </key>
+    <foreign-key id="56" parent="19" name="STTUSPERSONSTTUSID">
+      <ColNames>STATUS_ID</ColNames>
+      <RefSchemaName>APP</RefSchemaName>
+      <RefTableName>STATUS</RefTableName>
+      <RefKeyName>SQL180516113909731</RefKeyName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
+    <foreign-key id="57" parent="19" name="STTUSPERSONPOPLEID">
+      <ColNames>PEOPLE_ID</ColNames>
+      <RefSchemaName>APP</RefSchemaName>
+      <RefTableName>PERSON</RefTableName>
+      <RefKeyName>SQL180516113909720</RefKeyName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>

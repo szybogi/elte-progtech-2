@@ -25,16 +25,23 @@ public class MenuBar extends JMenuBar {
 		houseMenu.add(miCreateHouse);
 		add(houseMenu);
 
+		JMenu characterMenu = new JMenu("Karakterek");
+		JMenuItem miShowCharacters = new JMenuItem("Karakterek listázása", iconShop);
+		JMenuItem miCreateCharacter = new JMenuItem("Karakter felvétele", iconWrench);
+		miShowCharacters.addActionListener(e -> Window.getMainWindow().getWindowContent().getScrollPane().setPersonList());
+		miCreateCharacter.addActionListener(e -> Window.getMainWindow().getWindowContent().getScrollPane().setCharacterCreate());
+		characterMenu.add(miShowCharacters);
+		characterMenu.add(miCreateCharacter);
+		add(characterMenu);
 
 		JMenu allianceMenu = new JMenu("Szövetségek");
 		JMenuItem miShowAlliances = new JMenuItem("Szövetségek listázása", iconShop);
 		JMenuItem miCreateAlliance = new JMenuItem("Szövetség felvétele", iconWrench);
-		miShowHouses.addActionListener(e -> Window.getMainWindow().getWindowContent().getScrollPane().setAllianceGrid());
-		miCreateHouse.addActionListener(e -> Window.getMainWindow().getWindowContent().getScrollPane().setAllianceCreate());
-		houseMenu.add(miShowAlliances);
-		houseMenu.add(miCreateAlliance);
+		miShowAlliances.addActionListener(e -> Window.getMainWindow().getWindowContent().getScrollPane().setAllianceList());
+		miCreateAlliance.addActionListener(e -> Window.getMainWindow().getWindowContent().getScrollPane().setAllianceCreate());
+		allianceMenu.add(miShowAlliances);
+		allianceMenu.add(miCreateAlliance);
 		add(allianceMenu);
-
 
 
 		JMenuItem miExit = new JMenuItem("Kilépés", iconSleep);
