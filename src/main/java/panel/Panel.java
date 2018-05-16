@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class AbstractPanel extends JPanel {
+public class Panel extends JPanel {
 
 	protected HouseController houseController = (HouseController) Controller.HOUSE.getController();
 	protected StatusController statusController = (StatusController) Controller.STATUS.getController();

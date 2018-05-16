@@ -3,19 +3,14 @@ package panel;
 import logic.Managable;
 import logic.ResizeableElement;
 import model.House;
-import sun.misc.IOUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.sql.Clob;
-import java.sql.SQLException;
-import java.util.Base64;
 
-public class HouseCreate extends AbstractPanel implements Managable, ResizeableElement {
+public class HouseCreate extends Panel implements Managable, ResizeableElement {
 
 	private House house;
 

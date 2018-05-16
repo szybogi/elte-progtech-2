@@ -11,7 +11,7 @@ import java.sql.Clob;
 import java.util.List;
 import java.util.Vector;
 
-import static panel.AbstractPanel.scaleImage;
+import static panel.Panel.scaleImage;
 
 /**
  * Describes a House
@@ -85,6 +85,6 @@ public class House extends AbstractEntity implements Rowable, Serializable {
 
 	@Override
 	public String toString() {
-		return name;
+		return "n: " + name;
 	}
 }
