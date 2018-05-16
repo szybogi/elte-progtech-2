@@ -3,14 +3,12 @@ package panel;
 import logic.Managable;
 import logic.ResizeableElement;
 import model.House;
-import sun.misc.FloatingDecimal;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.sql.Blob;
 
 public class HouseCreate extends Panel implements Managable, ResizeableElement {
 
@@ -46,10 +44,7 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 	@Override
 	public void save() {
 		houseController.autoPersist(house);
-		house = new House();
-		read();
-		revalidate();
-		repaint();
+		window.Window.getMainWindow().getWindowContent().getScrollPane().setHouseList();
 	}
 
 	@Override
@@ -83,14 +78,24 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 		if (f == null) {
 			return;
 		}
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try {
-			ImageIO.write(ImageIO.read(new File(f.getAbsolutePath())), "png", baos);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		house.setCrest(baos.toByteArray());
-		house.convertBlobToIcon();
+		SwingWorker sw = new SwingWorker() {
+			@Override
+			protected Object doInBackground() throws Exception {
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ImageIO.write(ImageIO.read(new File(f.getAbsolutePath())), "png", baos);
+				house.setCrest(baos.toByteArray());
+
+				house.convertBlobToIcon();
+				return null;
+			}
+
+			@Override
+			protected void done() {
+				super.done();
+				crestField.setIcon(house.getCrestIcon());
+			}
+		};
+		sw.execute();
 	};
 
 	private void draw() {
@@ -183,7 +188,7 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 
 		JButton cancelButton = new JButton("Vissza a listához");
 		cancelButton.setActionCommand("Vissza a listához");
-		cancelButton.addActionListener(e -> window.Window.getMainWindow().getWindowContent().getScrollPane().setHouseGrid());
+		cancelButton.addActionListener(e -> window.Window.getMainWindow().getWindowContent().getScrollPane().setHouseList());
 		buttonPane.add(cancelButton);
 	}
 

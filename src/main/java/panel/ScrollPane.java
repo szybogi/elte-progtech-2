@@ -9,14 +9,14 @@ public class ScrollPane extends JScrollPane implements ResizeableElement {
 
 	ScrollPane() {
 		setSize(currentSize());
-		//setHouseGrid();
+		//setHouseList();
 		setHouseCreate();
 		setVisible(true);
 		revalidate();
 		repaint();
 	}
 
-	void setHouseGrid() {
+	void setHouseList() {
 		setViewportView(new HouseList());
 		onResize();
 	}

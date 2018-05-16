@@ -19,7 +19,7 @@ public class MenuBar extends JMenuBar {
 		JMenu houseMenu = new JMenu("Házak");
 		JMenuItem miShowHouses = new JMenuItem("Házak listázása", iconShop);
 		JMenuItem miCreateHouse = new JMenuItem("Ház felvétele", iconWrench);
-		miShowHouses.addActionListener(e -> Window.getMainWindow().getWindowContent().getScrollPane().setHouseGrid());
+		miShowHouses.addActionListener(e -> Window.getMainWindow().getWindowContent().getScrollPane().setHouseList());
 		miCreateHouse.addActionListener(e -> Window.getMainWindow().getWindowContent().getScrollPane().setHouseCreate());
 		houseMenu.add(miShowHouses);
 		houseMenu.add(miCreateHouse);
