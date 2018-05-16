@@ -5,8 +5,11 @@ import logic.ResizeableElement;
 
 import javax.swing.*;
 import model.Person;
+import model.Status;
 
 import java.awt.*;
+import java.util.Vector;
+import java.util.stream.Collectors;
 
 public class PersonCreate extends Panel implements Managable, ResizeableElement {
 
@@ -14,6 +17,7 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 
 	private JFormattedTextField nameField;
 	private JFormattedTextField armyField;
+	private JComboBox<Status> statusField;
 
 	public PersonCreate(Person person) {
 		draw();
@@ -34,6 +38,7 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 	public void read() {
 		nameField.setText(person.getName());
 		armyField.setText(person.getArmyCount() != null ? person.getArmyCount().toString() : "");
+		statusField.setSelectedItem(person.getStatus());
 	}
 
 	@Override
@@ -47,6 +52,7 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 		Boolean valid = true;
 
 		person.setName(nameField.getText());
+		person.setStatus((Status) statusField.getSelectedItem());
 
 		if(person.getArmyCount() == null) {
 			person.setArmyCount(0);
@@ -115,16 +121,29 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 		gbc_armyField.gridy = 1;
 		add(armyField, gbc_armyField);
 
+		JLabel statusLabel = new JLabel("Státusz:");
+		GridBagConstraints gbc_statusLabel = new GridBagConstraints();
+		gbc_statusLabel.anchor = GridBagConstraints.EAST;
+		gbc_statusLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_statusLabel.gridx = 0;
+		gbc_statusLabel.gridy = 2;
+		add(statusLabel, gbc_statusLabel);
+
+		Vector<Status> statuses = statusController.findAll().collect(Collectors.toCollection(Vector::new));
+		statusField = new JComboBox<>(statuses);
+		statusField.setSelectedItem(statusController.getCharacterStatusAlive());
+
+		GridBagConstraints gbc_statusField = new GridBagConstraints();
+		gbc_statusField.insets = new Insets(0, 0, 5, 5);
+		gbc_statusField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_statusField.gridx = 1;
+		gbc_statusField.gridy = 2;
+		add(statusField, gbc_statusField);
+
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		buttonPane.setBackground(getBackground());
 
-		GridBagConstraints gbc_buttonPane = new GridBagConstraints();
-		gbc_buttonPane.insets = new Insets(0, 0, 5, 5);
-		gbc_buttonPane.fill = GridBagConstraints.HORIZONTAL;
-		gbc_buttonPane.gridx = 1;
-		gbc_buttonPane.gridy = 2;
-		add(buttonPane, gbc_buttonPane);
 
 		JButton okButton = new JButton("Mentés");
 		okButton.setActionCommand("Mentés");
@@ -135,6 +154,13 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 		cancelButton.setActionCommand("Vissza a listához");
 		cancelButton.addActionListener(e -> window.Window.getMainWindow().getWindowContent().getScrollPane().setPersonList());
 		buttonPane.add(cancelButton);
+
+		GridBagConstraints gbc_buttonPane = new GridBagConstraints();
+		gbc_buttonPane.insets = new Insets(0, 0, 5, 5);
+		gbc_buttonPane.fill = GridBagConstraints.HORIZONTAL;
+		gbc_buttonPane.gridx = 1;
+		gbc_buttonPane.gridy = 3;
+		add(buttonPane, gbc_buttonPane);
 
 	}
 

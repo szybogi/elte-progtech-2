@@ -29,6 +29,10 @@ public class Status extends AbstractEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return name;
+		switch (name) {
+			case "alive" : return "Él";
+			case "dead" : return "Halott";
+			default: return "";
+		}
 	}
 }
