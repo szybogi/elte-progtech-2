@@ -43,18 +43,18 @@ public class ScrollPane extends JScrollPane implements ResizeableElement {
 		onResize();
 	}
 
-
 	void setAllianceList() {
+		setViewportView(new AllianceList());
 		onResize();
 	}
 
 	void setAllianceCreate() {
-		setAllianceCreate(null); // TODO: Alliance
+		setAllianceCreate(null);
 		onResize();
 	}
 
-	void setAllianceCreate(Alliance allianceCreate) {
-		setViewportView(new PersonList()); // TODO: Alliance
+	void setAllianceCreate(Alliance alliance) {
+		setViewportView(new AllianceCreate(alliance));
 		onResize();
 	}
 

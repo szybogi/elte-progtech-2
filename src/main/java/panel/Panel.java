@@ -4,7 +4,11 @@ import control.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Panel extends JPanel {
 
@@ -17,6 +21,20 @@ public class Panel extends JPanel {
 	protected Color neutralColor = new Color(255, 255, 255, 255);
 	protected Color backGroundColor = new Color(130, 162, 182, 255);
 
+	public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+	public final KeyAdapter dateAdapter = new KeyAdapter() {
+		public void keyTyped(KeyEvent e) {
+			char c = e.getKeyChar();
+			if (!((c >= '0') && (c <= '9') ||
+					(c == KeyEvent.VK_BACK_SPACE) ||
+					(c == KeyEvent.VK_DELETE) || (c == KeyEvent.VK_MINUS)))
+			{
+				//JOptionPane.showMessageDialog(null, "Please Enter Valid");
+				e.consume();
+			}
+		}
+	};
 
 	public static BufferedImage scaleImage(int w, int h, BufferedImage img) {
 		BufferedImage bi;

@@ -2,12 +2,15 @@ package model;
 
 import logic.Rowable;
 import lombok.*;
+import panel.Panel;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -36,7 +39,24 @@ public class Alliance extends AbstractEntity implements Rowable, Serializable {
 	private List<House> houses;
 
 	@Override
-	public Vector convert() {
-		return null;
+	public Vector<Object> convert() {
+		Vector<Object> data = new Vector<>();
+		data.add(this);
+		data.add(Panel.dateFormat.format(dateFrom));
+		data.add(Panel.dateFormat.format(dateTo));
+		return data;
+	}
+
+	public static Vector<Object> columns = new Vector<>();
+
+	static {
+		columns.add("Szövetségesek");
+		columns.add("Kezdete");
+		columns.add("Vége");
+	}
+
+	@Override
+	public String toString() {
+		return houses.stream().map(House::toString).collect(Collectors.joining(", "));
 	}
 }
