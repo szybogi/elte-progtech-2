@@ -1,9 +1,12 @@
 package panel;
 
+import control.StatusController;
 import logic.Managable;
 import logic.ResizeableElement;
 
 import javax.swing.*;
+
+import model.House;
 import model.Person;
 import model.Status;
 
@@ -18,15 +21,15 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 	private JFormattedTextField nameField;
 	private JFormattedTextField armyField;
 	private JComboBox<Status> statusField;
+	private JComboBox<House> houseField;
 
 	public PersonCreate(Person person) {
-		draw();
-
 		if (person != null) {
 			this.person = person;
 		} else {
 			this.person = new Person();
 		}
+		draw();
 		read();
 
 		setVisible(true);
@@ -39,10 +42,14 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 		nameField.setText(person.getName());
 		armyField.setText(person.getArmyCount() != null ? person.getArmyCount().toString() : "");
 		statusField.setSelectedItem(person.getStatus());
+		houseField.setSelectedItem(person.getHouse());
 	}
 
 	@Override
 	public void save() {
+		if(person.getStatus().getName().equals(StatusController.PERSON_STATUS_DEAD)) {
+			person.setArmyCount(0);
+		}
 		personController.autoPersist(person);
 		window.Window.getMainWindow().getWindowContent().getScrollPane().setPersonList();
 	}
@@ -53,6 +60,7 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 
 		person.setName(nameField.getText());
 		person.setStatus((Status) statusField.getSelectedItem());
+		person.setHouse((House) houseField.getSelectedItem());
 
 		if(person.getArmyCount() == null) {
 			person.setArmyCount(0);
@@ -70,6 +78,13 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 			valid = false;
 		} else {
 			nameField.setBackground(neutralColor);
+		}
+
+		if(person.getHouse() == null) {
+			houseField.setBackground(errorColor);
+			valid = false;
+		} else {
+			houseField.setBackground(neutralColor);
 		}
 
 		return valid;
@@ -131,6 +146,10 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 
 		Vector<Status> statuses = statusController.findAll().collect(Collectors.toCollection(Vector::new));
 		statusField = new JComboBox<>(statuses);
+		if(person.getStatus() != null) {
+			statusField.setEnabled(person.getStatus().getName().equals(StatusController.PERSON_STATUS_ALIVE));
+			armyField.setEnabled(person.getStatus().getName().equals(StatusController.PERSON_STATUS_ALIVE));
+		}
 		statusField.setSelectedItem(statusController.getPersonStatusAlive());
 
 		GridBagConstraints gbc_statusField = new GridBagConstraints();
@@ -139,6 +158,29 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 		gbc_statusField.gridx = 1;
 		gbc_statusField.gridy = 2;
 		add(statusField, gbc_statusField);
+
+
+		JLabel houseLabel = new JLabel("Ház:");
+		GridBagConstraints gbc_houseLabel = new GridBagConstraints();
+		gbc_houseLabel.anchor = GridBagConstraints.EAST;
+		gbc_houseLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_houseLabel.gridx = 0;
+		gbc_houseLabel.gridy = 3;
+		add(houseLabel, gbc_houseLabel);
+
+
+		Vector<House> houses = houseController.findAll().collect(Collectors.toCollection(Vector::new));
+		houseField = new JComboBox<>(houses);
+
+		houseField.setSelectedItem(statusController.getPersonStatusAlive());
+
+		GridBagConstraints gbc_houseField = new GridBagConstraints();
+		gbc_houseField.insets = new Insets(0, 0, 5, 5);
+		gbc_houseField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_houseField.gridx = 1;
+		gbc_houseField.gridy = 3;
+		add(houseField, gbc_houseField);
+
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -159,7 +201,7 @@ public class PersonCreate extends Panel implements Managable, ResizeableElement 
 		gbc_buttonPane.insets = new Insets(0, 0, 5, 5);
 		gbc_buttonPane.fill = GridBagConstraints.HORIZONTAL;
 		gbc_buttonPane.gridx = 1;
-		gbc_buttonPane.gridy = 3;
+		gbc_buttonPane.gridy = 4;
 		add(buttonPane, gbc_buttonPane);
 
 	}
