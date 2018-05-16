@@ -18,8 +18,6 @@ public class HouseList extends Table {
 
 	private HouseController houseController = (HouseController) Controller.HOUSE.getController();
 
-	private House selectedHouse;
-
 	HouseList() {
 		super();
 		init(houseController.findAll().map(House::convert).collect(Collectors.toCollection(Vector::new)), House.columns);

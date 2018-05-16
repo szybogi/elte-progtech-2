@@ -16,3 +16,16 @@ dependencies {
     compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.1'
     compileOnly 'org.projectlombok:lombok:1.16.20'
 }
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'Main'
+        )
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

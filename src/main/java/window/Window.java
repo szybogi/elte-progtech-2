@@ -70,7 +70,7 @@ public class Window extends JFrame implements ComponentListener, ResizeableEleme
 	@Override
 	public void componentResized(ComponentEvent e) {
 		PropertyLoader.getProperties().setProperty(PropertyLoader.WINDOW_WIDTH, Integer.toString(getWidth() - 16));
-		PropertyLoader.getProperties().setProperty(PropertyLoader.WINDOW_HEIGHT, Integer.toString(getHeight() - 32));
+		PropertyLoader.getProperties().setProperty(PropertyLoader.WINDOW_HEIGHT, Integer.toString(getHeight() - getJMenuBar().getHeight() - 40));
 		ComponentTools.findComponents(this, ResizeableElement.class).forEach(ResizeableElement::onResize);
 		revalidate();
 		repaint();
