@@ -16,20 +16,21 @@ import java.util.stream.Collectors;
 
 public class HouseList extends JTable implements ResizeableElement {
 
-	protected HouseController houseController = (HouseController) Controller.HOUSE.getController();
+	private HouseController houseController = (HouseController) Controller.HOUSE.getController();
 
 	private House selectedHouse;
 
-	public HouseList() {
+	HouseList() {
 		setLayout(new BorderLayout());
 		setSize(currentSize());
 		Vector<Vector<Object>> data = houseController.findAll().map(House::convert).collect(Collectors.toCollection(Vector::new));
-		DefaultTableModel tableModel = new DefaultTableModel(data, House.columns);
+		TableModel tableModel = new TableModel(data, House.columns);
+		tableModel.addImageColumn(2);
 		setModel(tableModel);
 		getSelectionModel().addListSelectionListener(selectionListener);
-		TableRowSorter<TableModel> sorter = new TableRowSorter<>(getModel());
+		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) getModel());
 		ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<>();
-		for (int i = 0; i < getModel().getColumnCount(); i++) {
+		for (int i = 0; i < getModel().getColumnCount() - 1; i++) {
 			sortKeys.add(new RowSorter.SortKey(i, SortOrder.ASCENDING));
 		}
 		sorter.setSortKeys(sortKeys);

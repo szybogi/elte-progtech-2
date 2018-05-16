@@ -39,7 +39,7 @@
       <Position>3</Position>
       <DataType>DATE|91s</DataType>
     </column>
-    <key id="22" parent="13" name="SQL180515211350970">
+    <key id="22" parent="13" name="SQL180516095020460">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
@@ -54,7 +54,7 @@
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="25" parent="14" name="SQL180515211350990">
+    <key id="25" parent="14" name="SQL180516095020470">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>HOUSES_ID
 ALLIANCES_ID</ColNames>
@@ -64,14 +64,14 @@ ALLIANCES_ID</ColNames>
       <ColNames>HOUSES_ID</ColNames>
       <RefSchemaName>APP</RefSchemaName>
       <RefTableName>HOUSE</RefTableName>
-      <RefKeyName>SQL180515211350910</RefKeyName>
+      <RefKeyName>SQL180516095020391</RefKeyName>
       <RefColNames>ID</RefColNames>
     </foreign-key>
     <foreign-key id="27" parent="14" name="LLNCEHOUSELLNCESID">
       <ColNames>ALLIANCES_ID</ColNames>
       <RefSchemaName>APP</RefSchemaName>
       <RefTableName>ALLIANCE</RefTableName>
-      <RefKeyName>SQL180515211350970</RefKeyName>
+      <RefKeyName>SQL180516095020460</RefKeyName>
       <RefColNames>ID</RefColNames>
     </foreign-key>
     <column id="28" parent="15" name="ID">
@@ -83,7 +83,7 @@ ALLIANCES_ID</ColNames>
     </column>
     <column id="29" parent="15" name="CREST">
       <Position>2</Position>
-      <DataType>CLOB|2005s</DataType>
+      <DataType>BLOB|2004s</DataType>
     </column>
     <column id="30" parent="15" name="MOTTO">
       <Position>3</Position>
@@ -93,58 +93,62 @@ ALLIANCES_ID</ColNames>
       <Position>4</Position>
       <DataType>VARCHAR(255)|12s</DataType>
     </column>
-    <key id="32" parent="15" name="SQL180515211350910">
+    <index id="32" parent="15" name="SQL180516095020390">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NAME</ColNames>
+    </index>
+    <key id="33" parent="15" name="SQL180516095020391">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="33" parent="16" name="HOUSE_ID">
+    <column id="34" parent="16" name="HOUSE_ID">
       <Position>1</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="34" parent="16" name="CHARACTERS_ID">
+    <column id="35" parent="16" name="CHARACTERS_ID">
       <Position>2</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="35" parent="16" name="SQL180515211351000">
+    <key id="36" parent="16" name="SQL180516095020490">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>HOUSE_ID
 CHARACTERS_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="36" parent="17" name="ID">
+    <column id="37" parent="17" name="ID">
       <Position>1</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <DefaultExpression>GENERATED_BY_DEFAULT</DefaultExpression>
     </column>
-    <column id="37" parent="17" name="NAME">
+    <column id="38" parent="17" name="NAME">
       <Position>2</Position>
       <DataType>VARCHAR(255)|12s</DataType>
     </column>
-    <index id="38" parent="17" name="SQL180515211350950">
+    <index id="39" parent="17" name="SQL180516095020440">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>NAME</ColNames>
     </index>
-    <key id="39" parent="17" name="SQL180515211350951">
+    <key id="40" parent="17" name="SQL180516095020441">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="40" parent="18" name="STATUS_ID">
+    <column id="41" parent="18" name="STATUS_ID">
       <Position>1</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="41" parent="18" name="CHARACTERS_ID">
+    <column id="42" parent="18" name="CHARACTERS_ID">
       <Position>2</Position>
       <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="42" parent="18" name="SQL180515211351020">
+    <key id="43" parent="18" name="SQL180516095020500">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>STATUS_ID
 CHARACTERS_ID</ColNames>

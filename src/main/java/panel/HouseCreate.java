@@ -3,12 +3,14 @@ package panel;
 import logic.Managable;
 import logic.ResizeableElement;
 import model.House;
+import sun.misc.FloatingDecimal;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.sql.Blob;
 
 public class HouseCreate extends Panel implements Managable, ResizeableElement {
 
@@ -38,7 +40,7 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 	public void read() {
 		nameField.setText(house.getName());
 		mottoField.setText(house.getMotto());
-
+		crestField.setIcon(house.getCrestIcon());
 	}
 
 	@Override
@@ -81,20 +83,14 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 		if (f == null) {
 			return;
 		}
-		SwingWorker sw = new SwingWorker() {
-			@Override
-			protected Object doInBackground() throws Exception {
-				house.setCrestIcon(new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(f.getAbsolutePath())))));
-				return null;
-			}
-
-			@Override
-			protected void done() {
-				super.done();
-				crestField.setIcon(house.getCrestIcon());
-			}
-		};
-		sw.execute();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(ImageIO.read(new File(f.getAbsolutePath())), "png", baos);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		house.setCrest(baos.toByteArray());
+		house.convertBlobToIcon();
 	};
 
 	private void draw() {
@@ -178,7 +174,6 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 		gbc_buttonPane.fill = GridBagConstraints.HORIZONTAL;
 		gbc_buttonPane.gridx = 1;
 		gbc_buttonPane.gridy = 4;
-		add(crestField, gbc_crestField);
 		add(buttonPane, gbc_buttonPane);
 
 		JButton okButton = new JButton("Mentés");
@@ -198,4 +193,5 @@ public class HouseCreate extends Panel implements Managable, ResizeableElement {
 		revalidate();
 		repaint();
 	}
+
 }
