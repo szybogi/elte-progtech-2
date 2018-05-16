@@ -83,7 +83,7 @@ public class AllianceCreate extends Panel implements Managable, ResizeableElemen
 			}
 		}
 
-		if(dateFromField != null && allianceController.validDateRange(alliance.getHouses(), alliance.getDateFrom(), alliance.getDateTo())) {
+		if(dateFromField != null && !allianceController.validDateRange(alliance.getHouses(), alliance.getDateFrom(), alliance.getDateTo())) {
 			dateFromField.setBackground(errorColor);
 			valid = false;
 		}
